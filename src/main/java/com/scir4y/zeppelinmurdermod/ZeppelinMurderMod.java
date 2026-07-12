@@ -1,6 +1,7 @@
 package com.scir4y.zeppelinmurdermod;
 
 import com.scir4y.zeppelinmurdermod.item.MODITEMS;
+import com.scir4y.zeppelinmurdermod.item.ModCreativeTabs;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -45,7 +46,13 @@ public class ZeppelinMurderMod {
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
+        //Registering mod creative tabs
+        ModCreativeTabs.register(modEventBus);
+
+        //Registering mod items & mod blocks
         MODITEMS.register(modEventBus);
+
+
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (ExampleMod) to respond directly to events.
@@ -66,7 +73,5 @@ public class ZeppelinMurderMod {
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
-        // Do something when the server starts
-        LOGGER.info("HELLO from server starting");
     }
 }
