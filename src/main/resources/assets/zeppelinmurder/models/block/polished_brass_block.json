@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "zeppelinmurder:block/polished_brass_block"
+  }
+}

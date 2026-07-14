@@ -1,5 +1,6 @@
 package com.scir4y.zeppelinmurdermod;
 
+import com.scir4y.zeppelinmurdermod.block.MODBLOCKS;
 import com.scir4y.zeppelinmurdermod.item.MODITEMS;
 import com.scir4y.zeppelinmurdermod.item.ModCreativeTabs;
 import org.slf4j.Logger;
@@ -51,7 +52,7 @@ public class ZeppelinMurderMod {
 
         //Registering mod items & mod blocks
         MODITEMS.register(modEventBus);
-
+        MODBLOCKS.register(modEventBus);
 
 
         // Register ourselves for server and other game events we are interested in.
@@ -65,8 +66,9 @@ public class ZeppelinMurderMod {
 
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
-        if(event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
+        if(event.getTabKey() == CreativeModeTabs.SEARCH) {
           event.accept(MODITEMS.KNIFE);
+          event.accept(MODBLOCKS.POLISHED_BRASS_BLOCK);
         }
     }
 

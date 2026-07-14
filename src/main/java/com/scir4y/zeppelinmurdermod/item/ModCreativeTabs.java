@@ -1,6 +1,7 @@
 package com.scir4y.zeppelinmurdermod.item;
 
 import com.scir4y.zeppelinmurdermod.ZeppelinMurderMod;
+import com.scir4y.zeppelinmurdermod.block.MODBLOCKS;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -21,6 +22,7 @@ public class ModCreativeTabs {
 
                         //All items add to here
                         output.accept(MODITEMS.KNIFE);
+                        output.accept(MODBLOCKS.POLISHED_BRASS_BLOCK);
 
                     }).build());
 
