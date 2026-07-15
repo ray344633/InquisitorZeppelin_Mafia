@@ -18,7 +18,6 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.common.ItemAbility;
 
-import java.util.Vector;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -46,19 +45,16 @@ public class KnifeItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
         if (WasUsed == false) {
             CanBeUsed = true;
-        } else {
-            System.out.println("Tool wasn't used");
         }
         return super.use(level, player, usedHand);
     }
 
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        Level level = attacker.level();
         return true;
         }
 
     public void postHurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (CanBeUsed == true && WasUsed == false) {
+        if (CanBeUsed && !WasUsed && attacker.isHolding(stack.getItem())) {
             WasUsed = true; CanBeUsed = false;
 
             Vec3 vector = attacker.getLookAngle();
@@ -69,6 +65,7 @@ public class KnifeItem extends Item {
                     vector.z * Velocity
             );
             target.setDeltaMovement(motion);
+
 
             target.hurtMarked = true;
             target.hasImpulse = true;

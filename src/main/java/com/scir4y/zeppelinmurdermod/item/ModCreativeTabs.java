@@ -23,6 +23,7 @@ public class ModCreativeTabs {
                         //All items add to here
                         output.accept(MODITEMS.KNIFE);
                         output.accept(MODBLOCKS.POLISHED_BRASS_BLOCK);
+                        output.accept(MODBLOCKS.BRASS_CHAIN);
 
                     }).build());
 

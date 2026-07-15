@@ -69,6 +69,7 @@ public class ZeppelinMurderMod {
         if(event.getTabKey() == CreativeModeTabs.SEARCH) {
           event.accept(MODITEMS.KNIFE);
           event.accept(MODBLOCKS.POLISHED_BRASS_BLOCK);
+          event.accept(MODBLOCKS.BRASS_CHAIN);
         }
     }
 

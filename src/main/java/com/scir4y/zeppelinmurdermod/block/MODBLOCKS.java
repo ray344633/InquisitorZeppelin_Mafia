@@ -5,6 +5,7 @@ import com.scir4y.zeppelinmurdermod.item.MODITEMS;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.ChainBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
@@ -17,12 +18,21 @@ public class MODBLOCKS {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(ZeppelinMurderMod.MODID);
 
     //Registering blocks
+        //  Polished brass block
     public static final DeferredBlock<Block> POLISHED_BRASS_BLOCK = registerBlock("polished_brass_block",
             ()-> new Block(BlockBehaviour.Properties.of()
                     .strength(2f)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.COPPER)
             ));
+        //  Brass chain
+    public static final DeferredBlock<ChainBlock> BRASS_CHAIN = registerBlock("brass_chain",
+                ()-> new ChainBlock(BlockBehaviour.Properties.of()
+                        .strength(1f)
+                        .requiresCorrectToolForDrops()
+                        .sound(SoundType.COPPER)
+                        .noOcclusion()
+                ));
 
     //Registering Blocks (helper method)
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
