@@ -54,7 +54,7 @@ public class KnifeItem extends Item {
         }
 
     public void postHurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (CanBeUsed && !WasUsed && attacker.isHolding(stack.getItem())) {
+        if (CanBeUsed && !WasUsed) {
             WasUsed = true; CanBeUsed = false;
 
             Vec3 vector = attacker.getLookAngle();
@@ -65,7 +65,6 @@ public class KnifeItem extends Item {
                     vector.z * Velocity
             );
             target.setDeltaMovement(motion);
-
 
             target.hurtMarked = true;
             target.hasImpulse = true;
