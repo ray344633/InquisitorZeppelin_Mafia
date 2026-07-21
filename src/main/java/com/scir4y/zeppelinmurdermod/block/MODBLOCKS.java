@@ -33,6 +33,8 @@ public class MODBLOCKS {
                         .sound(SoundType.COPPER)
                         .noOcclusion()
                 ));
+        // CraftBot                                         --- DELETE BEFORE PUBLISHING!!! ---
+
 
     //Registering Blocks (helper method)
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
