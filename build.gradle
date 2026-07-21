@@ -14,6 +14,12 @@ tasks.named('wrapper', Wrapper).configure {
     distributionType = Wrapper.DistributionType.BIN
 }
 
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs += ['--enable-preview']
+    sourceCompatibility = '21'
+    targetCompatibility = '21'
+}
+
 version = mod_version
 group = mod_group_id
 
