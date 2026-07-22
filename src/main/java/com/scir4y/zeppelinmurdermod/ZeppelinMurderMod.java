@@ -1,8 +1,17 @@
 package com.scir4y.zeppelinmurdermod;
 
 import com.scir4y.zeppelinmurdermod.block.MODBLOCKS;
+import com.scir4y.zeppelinmurdermod.client.gui.TextRender;
 import com.scir4y.zeppelinmurdermod.item.MODITEMS;
 import com.scir4y.zeppelinmurdermod.item.ModCreativeTabs;
+import net.minecraft.client.KeyMapping;
+import net.minecraft.resources.ResourceLocation;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.InputEvent;
+import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
+import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
+import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -77,4 +86,42 @@ public class ZeppelinMurderMod {
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
     }
+
+    @EventBusSubscriber(modid = MODID, value = Dist.CLIENT)
+    public static class ClientModEvents {
+
+        public static final KeyMapping TOGGLE_HUD_KEY = new KeyMapping(
+                "key.zeppelinmurder.toggle_hud",
+                GLFW.GLFW_KEY_J,
+                "key.categories.misc"
+        );
+
+        @SubscribeEvent
+        public static void onRegisterGuiLayers(RegisterGuiLayersEvent event) {
+            event.registerAboveAll(
+                    ResourceLocation.fromNamespaceAndPath(MODID, "text_render_layer"),
+                    new TextRender()
+            );
+        }
+
+        @SubscribeEvent
+        public static void onKeyRegister(RegisterKeyMappingsEvent event) {
+            event.register(TOGGLE_HUD_KEY);
+        }
+    }
+
+
+    @EventBusSubscriber(modid = MODID, value = Dist.CLIENT)
+    public static class ClientGameEvents {
+
+        @SubscribeEvent
+        public static void onKeyInput(InputEvent.Key event) {
+            // consumeClick() проверяет: "Нажал ли игрок эту кнопку?"
+            while (ClientModEvents.TOGGLE_HUD_KEY.consumeClick()) {
+                // Переключаем видимость: false станет true, true станет false
+                TextRender.alpha = 0;
+            }
+        }
+    }
+
 }
