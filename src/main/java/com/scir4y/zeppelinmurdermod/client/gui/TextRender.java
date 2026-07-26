@@ -38,8 +38,8 @@ public class TextRender implements LayeredDraw.Layer {
         guiGraphics.drawString(
                 font,
                 "TEST Привет, мир!",
-                100,       // Координата X
-                50,        // Координата Y
+                20,       // Координата X
+                20,        // Координата Y
                 colorWithAlpha,  // Цвет (Белый HEX)
                 true       // Добавить тень тексту (выглядит аккуратнее)
         );
