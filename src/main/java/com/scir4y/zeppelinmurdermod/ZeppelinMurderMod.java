@@ -53,7 +53,8 @@ public class ZeppelinMurderMod {
         //Registering mod items & mod blocks
         MODITEMS.register(modEventBus);
         MODBLOCKS.register(modEventBus);
-
+        com.scir4y.zeppelinmurdermod.block.entity.MODBLOCKENTITIES.register(modEventBus);
+        com.scir4y.zeppelinmurdermod.entity.MODENTITIES.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (ExampleMod) to respond directly to events.
@@ -62,15 +63,6 @@ public class ZeppelinMurderMod {
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
-    }
-
-    // Add the example block item to the building blocks tab
-    private void addCreative(BuildCreativeModeTabContentsEvent event) {
-        if(event.getTabKey() == CreativeModeTabs.SEARCH) {
-          event.accept(MODITEMS.KNIFE);
-          event.accept(MODBLOCKS.POLISHED_BRASS_BLOCK);
-          event.accept(MODBLOCKS.BRASS_CHAIN);
-        }
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

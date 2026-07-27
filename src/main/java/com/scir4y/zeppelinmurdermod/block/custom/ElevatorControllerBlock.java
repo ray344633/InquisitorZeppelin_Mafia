@@ -1,0 +1,34 @@
+package com.scir4y.zeppelinmurdermod.block.custom;
+
+import com.scir4y.zeppelinmurdermod.block.entity.custom.ElevatorControllerBlockEntity;
+import com.scir4y.zeppelinmurdermod.elevator.ElevatorAssembler;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.Nullable;
+
+public class ElevatorControllerBlock extends Block implements EntityBlock {
+    public ElevatorControllerBlock(Properties properties) {
+        super(properties);
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new ElevatorControllerBlockEntity(pos, state);
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        if (!level.isClientSide()) {
+            ElevatorAssembler.assembleAndSpawn(level, pos);
+        }
+        return InteractionResult.SUCCESS;
+    }
+}

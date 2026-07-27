@@ -25,6 +25,13 @@ public class MODBLOCKS {
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.COPPER)
             ));
+        //  Elevator controller block
+    public static final DeferredBlock<Block> ELEVATOR_CONTROLLER_BLOCK = registerBlock("elevator_controller_block",
+            ()-> new com.scir4y.zeppelinmurdermod.block.custom.ElevatorControllerBlock(BlockBehaviour.Properties.of()
+                    .strength(2f)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.METAL)
+            ));
         //  Brass chain
     public static final DeferredBlock<ChainBlock> BRASS_CHAIN = registerBlock("brass_chain",
                 ()-> new ChainBlock(BlockBehaviour.Properties.of()
