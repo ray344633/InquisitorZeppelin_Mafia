@@ -1,6 +1,7 @@
 package com.scir4y.zeppelinmurdermod.client.input;
 
 import com.scir4y.zeppelinmurdermod.ZeppelinMurderMod;
+import com.scir4y.zeppelinmurdermod.client.EffectManager;
 import com.scir4y.zeppelinmurdermod.client.hud.TextOverlay;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -14,8 +15,12 @@ public final class KeyBindsHandler {
 
     @SubscribeEvent
     public static void onClientTick(ClientTickEvent.Post e) {
+        EffectManager.tickEffect();
         if (KeyBinds.RELOAD_CONFIG != null && KeyBinds.RELOAD_CONFIG.consumeClick()) {
             TextOverlay.alpha = 0;
+        }
+        if (KeyBinds.SHADER_TOGGLE != null && KeyBinds.SHADER_TOGGLE.consumeClick()) {
+            EffectManager.toggleCustomEffect();
         }
     }
 }

@@ -14,6 +14,7 @@ public final class KeyBinds {
     public static final String CATEGORY = "key.categories.zeppelinmurder";
 
     public static KeyMapping RELOAD_CONFIG;
+    public static KeyMapping SHADER_TOGGLE;
 
     private KeyBinds() {}
 
@@ -25,6 +26,13 @@ public final class KeyBinds {
                 GLFW.GLFW_KEY_J,
                 CATEGORY
         );
+        SHADER_TOGGLE = new KeyMapping(
+                "key.zeppelinmurder.toggle",
+                InputConstants.Type.KEYSYM,
+                GLFW.GLFW_KEY_H,
+                CATEGORY
+        );
         e.register(RELOAD_CONFIG);
+        e.register(SHADER_TOGGLE);
     }
 }
