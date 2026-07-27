@@ -19,7 +19,9 @@ public class TextOverlay {
             ResourceLocation.fromNamespaceAndPath(ZeppelinMurderMod.MODID, "text_hud");
 
     public static float alpha = 0.0f;
+    public static float slide = 0.0f;
     private static final float FADE_SPEED_TICKS = 10.0f;
+    private static final ResourceLocation ICON = ResourceLocation.fromNamespaceAndPath(ZeppelinMurderMod.MODID, "textures/hud/icon.png");
 
     private TextOverlay() {}
 
@@ -52,6 +54,16 @@ public class TextOverlay {
             alpha = Mth.clamp(alpha, 0.0f, 1.0f);
         }
 
+        if (slide < 1.0f) {
+            slide = Mth.clamp(slide + deltaTicks / FADE_SPEED_TICKS, 0.0f, 1.0f);
+        }
+
+
+        float t = Mth.sin(slide * ((float)Math.PI / 2.0f));
+        int startOffset = -8; // начинается на 8 пикселей выше
+        int y = 20 + Math.round(startOffset * (1.0f - t));
+
+
         int alphaInt = (int) (alpha * 255.0f);
         int colorWithAlpha = (alphaInt << 24) | 0x00FFFFFF;
 
@@ -60,10 +72,22 @@ public class TextOverlay {
         gfx.drawString(
                 font,
                 "TEST Привет, мир!",
-                20,
+                25,
                 20,
                 colorWithAlpha,
                 true
+        );
+
+        gfx.blit(
+                ICON,
+                10,
+                y - 4,
+                0,
+                0,
+                16,
+                16,
+                16,
+                16
         );
     }
 }

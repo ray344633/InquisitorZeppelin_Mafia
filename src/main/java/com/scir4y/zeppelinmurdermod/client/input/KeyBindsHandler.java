@@ -18,6 +18,7 @@ public final class KeyBindsHandler {
         EffectManager.tickEffect();
         if (KeyBinds.RELOAD_CONFIG != null && KeyBinds.RELOAD_CONFIG.consumeClick()) {
             TextOverlay.alpha = 0;
+            TextOverlay.slide = 0;
         }
         if (KeyBinds.SHADER_TOGGLE != null && KeyBinds.SHADER_TOGGLE.consumeClick()) {
             EffectManager.toggleCustomEffect();
