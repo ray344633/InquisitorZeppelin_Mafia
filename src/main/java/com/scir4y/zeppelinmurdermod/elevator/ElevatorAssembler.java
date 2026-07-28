@@ -13,6 +13,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
+import static com.scir4y.zeppelinmurdermod.block.MODBLOCKS.ELEVATOR_CONTROLLER_BLOCK;
+import static com.scir4y.zeppelinmurdermod.block.MODBLOCKS.POLISHED_BRASS_BLOCK;
+
 public class ElevatorAssembler {
     
     public static void assembleAndSpawn(Level level, BlockPos controllerPos) {
@@ -24,22 +27,25 @@ public class ElevatorAssembler {
         
         while(!stack.isEmpty() && blocks.size() < 256) {
             BlockPos current = stack.pop();
-            
+
             if(visited.contains(current)) continue;
             visited.add(current);
-            
+
             BlockState state = level.getBlockState(current);
-            if(state.isAir() || state.is(Blocks.BEDROCK)) continue;
-            
+            if (!state.is(POLISHED_BRASS_BLOCK.get()) &&
+                    !state.is(ELEVATOR_CONTROLLER_BLOCK.get())) {
+                continue;
+            }
+
             // Limit distance from controller
-            if(Math.abs(current.getX() - controllerPos.getX()) > 5 || 
-               Math.abs(current.getY() - controllerPos.getY()) > 5 || 
+            if(Math.abs(current.getX() - controllerPos.getX()) > 5 ||
+               Math.abs(current.getY() - controllerPos.getY()) > 5 ||
                Math.abs(current.getZ() - controllerPos.getZ()) > 5) {
                 continue;
             }
-            
+
             blocks.put(current.subtract(controllerPos), state);
-            
+
             for(int x = -1; x <= 1; x++) {
                 for(int y = -1; y <= 1; y++) {
                     for(int z = -1; z <= 1; z++) {

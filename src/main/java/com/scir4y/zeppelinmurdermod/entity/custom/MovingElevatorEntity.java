@@ -4,32 +4,42 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class MovingElevatorEntity extends Entity {
-    private static final net.minecraft.network.syncher.EntityDataAccessor<CompoundTag> DATA_BLOCKS = SynchedEntityData.defineId(MovingElevatorEntity.class, net.minecraft.network.syncher.EntityDataSerializers.COMPOUND_TAG);
-    private static final net.minecraft.network.syncher.EntityDataAccessor<Float> DATA_TARGET_Y = SynchedEntityData.defineId(MovingElevatorEntity.class, net.minecraft.network.syncher.EntityDataSerializers.FLOAT);
-    private static final net.minecraft.network.syncher.EntityDataAccessor<Boolean> DATA_IS_MOVING = SynchedEntityData.defineId(MovingElevatorEntity.class, net.minecraft.network.syncher.EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<CompoundTag> DATA_BLOCKS = SynchedEntityData.defineId(MovingElevatorEntity.class, net.minecraft.network.syncher.EntityDataSerializers.COMPOUND_TAG);
+    private static final EntityDataAccessor<Float> DATA_TARGET_Y = SynchedEntityData.defineId(MovingElevatorEntity.class, net.minecraft.network.syncher.EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<Boolean> DATA_IS_MOVING = SynchedEntityData.defineId(MovingElevatorEntity.class, net.minecraft.network.syncher.EntityDataSerializers.BOOLEAN);
 
     private Map<BlockPos, BlockState> blocks = new HashMap<>();
-    
     private double targetY;
     private boolean isMoving = false;
-    private net.minecraft.world.phys.AABB elevatorBounds = new net.minecraft.world.phys.AABB(-0.5, 0, -0.5, 0.5, 1, 0.5);
+    private AABB elevatorBounds = new AABB(-0.5, 0, -0.5, 0.5, 1, 0.5);
 
     public MovingElevatorEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
         this.noPhysics = true;
     }
-    
+
+    @Override
+    protected AABB makeBoundingBox() {
+        if (this.elevatorBounds != null) {
+            return this.elevatorBounds.move(this.position());
+        }
+        return super.makeBoundingBox();
+    }
+
     public void setTargetY(double y) {
         this.targetY = y;
         this.isMoving = true;
@@ -42,7 +52,7 @@ public class MovingElevatorEntity extends Entity {
     public void setBlocks(Map<BlockPos, BlockState> blocks) {
         this.blocks = blocks;
         recalculateBounds();
-        
+
         if (!this.level().isClientSide()) {
             CompoundTag tag = new CompoundTag();
             ListTag list = new ListTag();
@@ -61,72 +71,50 @@ public class MovingElevatorEntity extends Entity {
 
     private void recalculateBounds() {
         if (this.blocks.isEmpty()) return;
-        
-        int minX = 0, minY = 0, minZ = 0;
-        int maxX = 0, maxY = 0, maxZ = 0;
-        boolean first = true;
-        for(BlockPos p : blocks.keySet()) {
-            if(first) {
-                minX = maxX = p.getX();
-                minY = maxY = p.getY();
-                minZ = maxZ = p.getZ();
-                first = false;
-            } else {
-                minX = Math.min(minX, p.getX());
-                minY = Math.min(minY, p.getY());
-                minZ = Math.min(minZ, p.getZ());
-                maxX = Math.max(maxX, p.getX());
-                maxY = Math.max(maxY, p.getY());
-                maxZ = Math.max(maxZ, p.getZ());
-            }
+
+        int minX = Integer.MAX_VALUE, minY = Integer.MAX_VALUE, minZ = Integer.MAX_VALUE;
+        int maxX = Integer.MIN_VALUE, maxY = Integer.MIN_VALUE, maxZ = Integer.MIN_VALUE;
+
+        for (BlockPos p : blocks.keySet()) {
+            minX = Math.min(minX, p.getX());
+            minY = Math.min(minY, p.getY());
+            minZ = Math.min(minZ, p.getZ());
+            maxX = Math.max(maxX, p.getX());
+            maxY = Math.max(maxY, p.getY());
+            maxZ = Math.max(maxZ, p.getZ());
         }
-        this.elevatorBounds = new net.minecraft.world.phys.AABB(minX - 0.5, minY, minZ - 0.5, maxX + 0.5, maxY + 1.0, maxZ + 0.5);
-        this.setBoundingBox(this.elevatorBounds.move(this.position()));
+
+        this.elevatorBounds = new AABB(minX - 0.5, minY, minZ - 0.5, maxX + 0.5, maxY + 1.0, maxZ + 0.5);
+        this.refreshDimensions();
+        this.setBoundingBox(this.makeBoundingBox());
     }
 
     public Map<BlockPos, BlockState> getBlocks() {
         return blocks;
     }
-    
+
     @Override
     public void tick() {
         super.tick();
-        
-        this.setBoundingBox(this.elevatorBounds.move(this.position()));
-        
+
         if (isMoving) {
-            double speed = 0.1;
+            double speed = 0.2;
             double nextY = this.getY();
-            
+
             if (this.getY() < targetY) {
                 nextY = Math.min(this.getY() + speed, targetY);
             } else if (this.getY() > targetY) {
                 nextY = Math.max(this.getY() - speed, targetY);
             }
-            
+
             double deltaY = nextY - this.getY();
+            Vec3 motion = new Vec3(0, deltaY, 0);
+
+            // Викликаємо наш адаптований обробник колізій ДО оновлення позиції
+            ElevatorCollisionHandler.handleCollisions(this, motion);
+
             this.setPos(this.getX(), nextY, this.getZ());
-            
-            // Push entities in the direction of movement (up or down)
-            if (deltaY != 0) {
-                double padding = 0.15;
-                net.minecraft.world.phys.AABB pushBox = this.getBoundingBox().inflate(padding, 0.0, padding);
-                java.util.List<Entity> passengers = this.level().getEntities(this, pushBox, e ->
-                    e instanceof net.minecraft.world.entity.LivingEntity || e instanceof net.minecraft.world.entity.item.ItemEntity);
-                for (Entity e : passengers) {
-                    // Entity is ON TOP of the platform (its feet are at or above the platform floor)
-                    double platformTop = this.getBoundingBox().maxY;
-                    double platformFloor = this.getBoundingBox().minY;
-                    boolean isOnPlatform = e.getBoundingBox().minY >= platformFloor - 0.5
-                                        && e.getBoundingBox().minY <= platformTop + 0.5;
-                    if (isOnPlatform) {
-                        e.move(net.minecraft.world.entity.MoverType.SHULKER_BOX, new net.minecraft.world.phys.Vec3(0, deltaY, 0));
-                        e.resetFallDistance();
-                        if (deltaY > 0) e.setOnGround(true);
-                    }
-                }
-            }
-            
+
             if (nextY == targetY) {
                 isMoving = false;
                 if (!this.level().isClientSide()) {
@@ -136,7 +124,7 @@ public class MovingElevatorEntity extends Entity {
             }
         }
     }
-    
+
     private void disassemble() {
         BlockPos center = this.blockPosition();
         for (Map.Entry<BlockPos, BlockState> entry : blocks.entrySet()) {
@@ -145,7 +133,7 @@ public class MovingElevatorEntity extends Entity {
         }
         this.discard();
     }
-    
+
     @Override
     public boolean canCollideWith(Entity entity) {
         return true;
@@ -162,9 +150,9 @@ public class MovingElevatorEntity extends Entity {
         builder.define(DATA_TARGET_Y, 0.0f);
         builder.define(DATA_IS_MOVING, false);
     }
-    
+
     @Override
-    public void onSyncedDataUpdated(net.minecraft.network.syncher.EntityDataAccessor<?> key) {
+    public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
         super.onSyncedDataUpdated(key);
         if (DATA_BLOCKS.equals(key) && this.level().isClientSide()) {
             CompoundTag tag = this.entityData.get(DATA_BLOCKS);

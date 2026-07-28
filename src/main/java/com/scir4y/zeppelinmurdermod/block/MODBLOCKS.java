@@ -1,6 +1,7 @@
 package com.scir4y.zeppelinmurdermod.block;
 
 import com.scir4y.zeppelinmurdermod.ZeppelinMurderMod;
+import com.scir4y.zeppelinmurdermod.block.custom.ElevatorControllerBlock;
 import com.scir4y.zeppelinmurdermod.item.MODITEMS;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -27,7 +28,7 @@ public class MODBLOCKS {
             ));
         //  Elevator controller block
     public static final DeferredBlock<Block> ELEVATOR_CONTROLLER_BLOCK = registerBlock("elevator_controller_block",
-            ()-> new com.scir4y.zeppelinmurdermod.block.custom.ElevatorControllerBlock(BlockBehaviour.Properties.of()
+            ()-> new ElevatorControllerBlock(BlockBehaviour.Properties.of()
                     .strength(2f)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.METAL)
