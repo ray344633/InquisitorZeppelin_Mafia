@@ -3,6 +3,7 @@ package com.scir4y.zeppelinmurdermod;
 import com.scir4y.zeppelinmurdermod.block.MODBLOCKS;
 import com.scir4y.zeppelinmurdermod.item.MODITEMS;
 import com.scir4y.zeppelinmurdermod.item.ModCreativeTabs;
+import com.scir4y.zeppelinmurdermod.item.custom.SelectionRenderer;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -53,24 +54,17 @@ public class ZeppelinMurderMod {
         //Registering mod items & mod blocks
         MODITEMS.register(modEventBus);
         MODBLOCKS.register(modEventBus);
-
+        com.scir4y.zeppelinmurdermod.block.entity.MODBLOCKENTITIES.register(modEventBus);
+        com.scir4y.zeppelinmurdermod.entity.MODENTITIES.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (ExampleMod) to respond directly to events.
         // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
         NeoForge.EVENT_BUS.register(this);
+        NeoForge.EVENT_BUS.register(SelectionRenderer.class);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
-    }
-
-    // Add the example block item to the building blocks tab
-    private void addCreative(BuildCreativeModeTabContentsEvent event) {
-        if(event.getTabKey() == CreativeModeTabs.SEARCH) {
-          event.accept(MODITEMS.KNIFE);
-          event.accept(MODBLOCKS.POLISHED_BRASS_BLOCK);
-          event.accept(MODBLOCKS.BRASS_CHAIN);
-        }
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

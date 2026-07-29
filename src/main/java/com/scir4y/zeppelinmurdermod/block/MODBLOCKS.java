@@ -1,6 +1,8 @@
 package com.scir4y.zeppelinmurdermod.block;
 
 import com.scir4y.zeppelinmurdermod.ZeppelinMurderMod;
+import com.scir4y.zeppelinmurdermod.block.custom.ElevatorCallerBlock;
+import com.scir4y.zeppelinmurdermod.block.custom.ElevatorControllerBlock;
 import com.scir4y.zeppelinmurdermod.item.MODITEMS;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -25,6 +27,13 @@ public class MODBLOCKS {
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.COPPER)
             ));
+        //  Elevator controller block
+    public static final DeferredBlock<Block> ELEVATOR_CONTROLLER_BLOCK = registerBlock("elevator_controller_block",
+            ()-> new ElevatorControllerBlock(BlockBehaviour.Properties.of()
+                    .strength(2f)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.METAL)
+            ));
         //  Brass chain
     public static final DeferredBlock<ChainBlock> BRASS_CHAIN = registerBlock("brass_chain",
                 ()-> new ChainBlock(BlockBehaviour.Properties.of()
@@ -33,6 +42,13 @@ public class MODBLOCKS {
                         .sound(SoundType.COPPER)
                         .noOcclusion()
                 ));
+        //  Elevator caller block (call button, placed on a floor)
+    public static final DeferredBlock<ElevatorCallerBlock> ELEVATOR_CALLER_BLOCK = registerBlock("elevator_caller_block",
+            ()-> new ElevatorCallerBlock(BlockBehaviour.Properties.of()
+                    .strength(2f)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.METAL)
+            ));
         // CraftBot                                         --- DELETE BEFORE PUBLISHING!!! ---
 
 
