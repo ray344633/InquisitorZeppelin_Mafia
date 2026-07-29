@@ -1,6 +1,7 @@
 package com.scir4y.zeppelinmurdermod.block;
 
 import com.scir4y.zeppelinmurdermod.ZeppelinMurderMod;
+import com.scir4y.zeppelinmurdermod.block.custom.ElevatorCallerBlock;
 import com.scir4y.zeppelinmurdermod.block.custom.ElevatorControllerBlock;
 import com.scir4y.zeppelinmurdermod.item.MODITEMS;
 import net.minecraft.world.item.BlockItem;
@@ -41,6 +42,13 @@ public class MODBLOCKS {
                         .sound(SoundType.COPPER)
                         .noOcclusion()
                 ));
+        //  Elevator caller block (call button, placed on a floor)
+    public static final DeferredBlock<ElevatorCallerBlock> ELEVATOR_CALLER_BLOCK = registerBlock("elevator_caller_block",
+            ()-> new ElevatorCallerBlock(BlockBehaviour.Properties.of()
+                    .strength(2f)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.METAL)
+            ));
         // CraftBot                                         --- DELETE BEFORE PUBLISHING!!! ---
 
 

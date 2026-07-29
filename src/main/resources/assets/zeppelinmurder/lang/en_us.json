@@ -1,7 +1,13 @@
 {
   "item.zeppelinmurder.knife": "Knife",
+  "item.zeppelinmurder.elevator_glue": "Elevator Glue",
+  "item.zeppelinmurder.elevator_floor_point": "Elevator Floor Point",
+  "item.zeppelinmurder.elevator_call_linker": "Elevator Call Linker",
 
   "block.zeppelinmurder.polished_brass_block": "Polished Brass Block",
+  "block.zeppelinmurder.brass_chain": "Brass Chain",
+  "block.zeppelinmurder.elevator_controller_block": "Elevator Controller",
+  "block.zeppelinmurder.elevator_caller_block": "Elevator Call Button",
 
   "creativetab.zeppelinmurder.zeppelin_items": "I:UF Items"
 }

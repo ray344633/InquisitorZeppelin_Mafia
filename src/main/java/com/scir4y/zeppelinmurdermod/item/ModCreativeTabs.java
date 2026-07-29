@@ -23,8 +23,11 @@ public class ModCreativeTabs {
                         //All items add to here
                         output.accept(MODITEMS.KNIFE);
                         output.accept(MODITEMS.ELEVATOR_GLUE);
+                        output.accept(MODITEMS.ELEVATOR_FLOOR_POINT);
+                        output.accept(MODITEMS.ELEVATOR_CALL_LINKER);
                         output.accept(MODBLOCKS.POLISHED_BRASS_BLOCK);
                         output.accept(MODBLOCKS.ELEVATOR_CONTROLLER_BLOCK);
+                        output.accept(MODBLOCKS.ELEVATOR_CALLER_BLOCK);
                         output.accept(MODBLOCKS.BRASS_CHAIN);
 
                     }).build());

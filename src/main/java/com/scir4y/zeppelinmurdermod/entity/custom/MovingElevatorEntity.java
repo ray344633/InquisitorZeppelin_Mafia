@@ -1,5 +1,7 @@
 package com.scir4y.zeppelinmurdermod.entity.custom;
 
+import com.scir4y.zeppelinmurdermod.block.MODBLOCKS;
+import com.scir4y.zeppelinmurdermod.block.entity.custom.ElevatorControllerBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -14,6 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
+import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,6 +29,18 @@ public class MovingElevatorEntity extends Entity {
     private double targetY;
     private boolean isMoving = false;
     private AABB elevatorBounds = new AABB(-0.5, 0, -0.5, 0.5, 1, 0.5);
+
+    // Данные контроллера, "путешествующие" вместе с сущностью, пока сам блок
+    // контроллера физически разобран. Восстанавливаются в disassemble().
+    // Существуют только на сервере, синхронизация клиенту не требуется.
+    private int rideTargetFloorIndex = -1;
+    @Nullable
+    private CompoundTag controllerRideData = null;
+
+    public void setRideMetadata(int targetFloorIndex, @Nullable CompoundTag controllerRideData) {
+        this.rideTargetFloorIndex = targetFloorIndex;
+        this.controllerRideData = controllerRideData;
+    }
 
     public MovingElevatorEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
@@ -127,10 +142,26 @@ public class MovingElevatorEntity extends Entity {
 
     private void disassemble() {
         BlockPos center = this.blockPosition();
+        BlockPos controllerRelPos = null;
+
         for (Map.Entry<BlockPos, BlockState> entry : blocks.entrySet()) {
             BlockPos worldPos = center.offset(entry.getKey());
             this.level().setBlock(worldPos, entry.getValue(), 3);
+
+            if (entry.getValue().is(MODBLOCKS.ELEVATOR_CONTROLLER_BLOCK.get())) {
+                controllerRelPos = entry.getKey();
+            }
         }
+
+        // Возвращаем контроллеру его "память" (этажи, очередь вызовов, форму платформы),
+        // которую он передал нам перед тем, как его блок был разобран.
+        if (controllerRelPos != null && controllerRideData != null && !this.level().isClientSide()) {
+            BlockPos controllerWorldPos = center.offset(controllerRelPos);
+            if (this.level().getBlockEntity(controllerWorldPos) instanceof ElevatorControllerBlockEntity controllerBE) {
+                controllerBE.restoreAfterRide(controllerRideData, rideTargetFloorIndex, this.level().getGameTime());
+            }
+        }
+
         this.discard();
     }
 

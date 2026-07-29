@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "zeppelinmurder:block/elevator_caller_block" }
+  }
+}
