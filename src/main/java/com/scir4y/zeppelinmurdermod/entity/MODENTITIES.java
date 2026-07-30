@@ -18,6 +18,18 @@ public class MODENTITIES {
                     .sized(1.0f, 1.0f)
                     .build("moving_elevator"));
 
+    public static final DeferredHolder<EntityType<?>, EntityType<PhysicalItemEntity>> PHYSICAL_ITEM =
+            ENTITY_TYPES.register("physical_item", () -> EntityType.Builder
+                    .<PhysicalItemEntity>of(PhysicalItemEntity::new, MobCategory.MISC)
+                    // Base/default size — actual per-item size comes from
+                    // PhysicalItemEntity#getDimensions(Pose), this is only the
+                    // "safety" size used before that override kicks in.
+                    .sized(0.25F, 0.25F)
+                    .clientTrackingRange(6)
+                    .updateInterval(20)
+                    .build("physical_item"));
+
+
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);
     }
