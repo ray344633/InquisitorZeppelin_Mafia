@@ -1,16 +1,16 @@
 package com.scir4y.zeppelinmurdermod.entity.custom;
 
 import com.scir4y.zeppelinmurdermod.client.render.gui.NoteViewScreen;
+import com.scir4y.zeppelinmurdermod.component.MODDATACOMPONENTS;
+import com.scir4y.zeppelinmurdermod.component.NoteContent;
 import com.scir4y.zeppelinmurdermod.item.MODITEMS;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Direction;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.network.Filterable;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -20,7 +20,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.WrittenBookContent;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -201,16 +200,7 @@ public class NoteEntity extends Entity {
 
     private ItemStack buildNoteStack() {
         ItemStack stack = new ItemStack(MODITEMS.WRITTEN_NOTE.get());
-
-        List<Filterable<Component>> pages = List.of(Filterable.passThrough(Component.literal(this.text)));
-        WrittenBookContent content = new WrittenBookContent(
-                Filterable.passThrough("Note"),
-                "",
-                0,
-                pages,
-                true
-        );
-        stack.set(DataComponents.WRITTEN_BOOK_CONTENT, content);
+        stack.set(MODDATACOMPONENTS.NOTE_CONTENT.get(), new NoteContent(this.text));
         return stack;
     }
 

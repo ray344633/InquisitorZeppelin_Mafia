@@ -1,6 +1,8 @@
 package com.scir4y.zeppelinmurdermod.item.custom;
 
 import com.scir4y.zeppelinmurdermod.client.render.gui.NoteViewScreen;
+import com.scir4y.zeppelinmurdermod.component.MODDATACOMPONENTS;
+import com.scir4y.zeppelinmurdermod.component.NoteContent;
 import com.scir4y.zeppelinmurdermod.entity.MODENTITIES;
 import com.scir4y.zeppelinmurdermod.entity.custom.NoteEntity;
 import java.util.List;
@@ -8,7 +10,6 @@ import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -20,7 +21,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.component.WrittenBookContent;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -48,7 +48,7 @@ public class WrittenNoteItem extends Item {
             }
 
             ItemStack stack = context.getItemInHand(); // get an item in hand
-            WrittenBookContent content = stack.get(DataComponents.WRITTEN_BOOK_CONTENT);
+            NoteContent content = stack.get(MODDATACOMPONENTS.NOTE_CONTENT.get());
 
             // if content is empty return
             if (content == null) {
@@ -67,9 +67,7 @@ public class WrittenNoteItem extends Item {
             if (!level.isClientSide()) {
                 try {
                     Direction face = context.getClickedFace(); // get the face of the block the player is interacting with
-                    // A few hacks with WrittenBookContent
-                    List<Component> pages = content.getPages(false);
-                    String text = pages.isEmpty() ? "" : pages.get(0).getString();
+                    String text = content.text();
 
                     Vec3 clickLoc = context.getClickLocation(); // get the coords of interaction(not block's coords)
                     Vec3 normal = Vec3.atLowerCornerOf(face.getNormal()); // get Normal(UP, DOWN, NORTH, WEST, SOUTH, EAST)

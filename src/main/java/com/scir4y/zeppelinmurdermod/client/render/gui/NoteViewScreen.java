@@ -1,21 +1,20 @@
 package com.scir4y.zeppelinmurdermod.client.render.gui;
 
+import com.scir4y.zeppelinmurdermod.component.MODDATACOMPONENTS;
+import com.scir4y.zeppelinmurdermod.component.NoteContent;
 import java.util.Collections;
 import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.client.GameNarrator;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.WrittenBookContent;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
@@ -81,10 +80,9 @@ public class NoteViewScreen extends Screen {
         // Helper method to create BookAccess from a written note item stack
         @Nullable
         public static BookAccess fromItem(ItemStack stack) {
-            boolean flag = Minecraft.getInstance().isTextFilteringEnabled();
-            WrittenBookContent writtenbookcontent = stack.get(DataComponents.WRITTEN_BOOK_CONTENT);
-            if (writtenbookcontent != null) {
-                return new BookAccess(writtenbookcontent.getPages(flag));
+            NoteContent content = stack.get(MODDATACOMPONENTS.NOTE_CONTENT.get());
+            if (content != null) {
+                return new BookAccess(List.of(Component.literal(content.text())));
             }
             return null;
         }
