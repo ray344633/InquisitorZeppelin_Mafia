@@ -2,6 +2,7 @@ package com.scir4y.zeppelinmurdermod.entity;
 
 import com.scir4y.zeppelinmurdermod.ZeppelinMurderMod;
 import com.scir4y.zeppelinmurdermod.entity.custom.MovingElevatorEntity;
+import com.scir4y.zeppelinmurdermod.entity.custom.NoteEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -17,6 +18,11 @@ public class MODENTITIES {
             ENTITY_TYPES.register("moving_elevator", () -> EntityType.Builder.<MovingElevatorEntity>of(MovingElevatorEntity::new, MobCategory.MISC)
                     .sized(1.0f, 1.0f)
                     .build("moving_elevator"));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<NoteEntity>> NOTE =
+            ENTITY_TYPES.register("note", () -> EntityType.Builder.<NoteEntity>of(NoteEntity::new, MobCategory.MISC)
+                    .sized(0.8f, 0.8f)
+                    .build("note"));
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);

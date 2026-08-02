@@ -22,6 +22,8 @@ public class ModCreativeTabs {
 
                         //All items add to here
                         output.accept(MODITEMS.KNIFE);
+                        output.accept(MODITEMS.NOTE);
+                        output.accept(MODITEMS.WRITTEN_NOTE);
                         output.accept(MODITEMS.ELEVATOR_GLUE);
                         output.accept(MODITEMS.ELEVATOR_FLOOR_POINT);
                         output.accept(MODITEMS.ELEVATOR_CALL_LINKER);
