@@ -1,11 +1,14 @@
 package com.scir4y.zeppelinmurdermod.client.render.hud;
 
+import com.scir4y.zeppelinmurdermod.Config;
 import com.scir4y.zeppelinmurdermod.ZeppelinMurderMod;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+
+import static com.scir4y.zeppelinmurdermod.data.ModAttachments.PLAYER_ROUND_DATA;
 
 public class MoodBar {
 
@@ -39,21 +42,18 @@ public class MoodBar {
         int barWidth = 64;
         int barHeight = 16;
 
-        float currentVal = 100 - (progress * 100); //30.0f;
-        float maxVal = 100.0f;
+        float currentVal = minecraft.player.getData(PLAYER_ROUND_DATA).currentMoodAmount;
+        float maxVal = Config.MAX_MOOD_AMOUNT.getAsInt();
         int filledWidth = (int) (barWidth * (currentVal / maxVal));
 
+        gfx.pose().pushPose();
         gfx.pose().scale(3, 3, 3);
-        gfx.blit(EMPTY_MOOD_BAR_TEXTURE, x, y, 0, 0, barWidth, barHeight, barWidth, barHeight);
 
+        gfx.blit(EMPTY_MOOD_BAR_TEXTURE, x, y, 0, 0, barWidth, barHeight, barWidth, barHeight);
         if (filledWidth > 0) {
-            gfx.blit(
-                    FIELD_MOOD_BAR_TEXTURE,
-                    x, y,
-                    0, 0,
-                    filledWidth, barHeight,
-                    barWidth, barHeight
-            );
+            gfx.blit(FIELD_MOOD_BAR_TEXTURE, x, y, 0, 0, filledWidth, barHeight, barWidth, barHeight);
         }
+
+        gfx.pose().popPose();
     }
 }
