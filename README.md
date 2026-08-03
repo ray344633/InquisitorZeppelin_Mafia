@@ -23,3 +23,23 @@ Additional Resources:
 ==========
 Community Documentation: https://docs.neoforged.net/  
 NeoForged Discord: https://discord.neoforged.net/
+
+## Architecture & Directory Structure
+This mod follows an advanced **Package-by-Feature (Domain-Driven)** architectural pattern, which is considered the standard for highly scalable, large Minecraft mods (e.g. Create, Mekanism). 
+
+This approach groups related classes by their actual in-game feature or system, rather than strictly by their technical type (like putting all items in one folder and all blocks in another).
+
+When adding new files, please follow these guidelines on where to place them inside `src/main/java/com/scir4y/zeppelinmurdermod/`:
+
+- **`content/`**: **Core Game Features**. Everything that exists in the world or inventories goes here, sub-divided by feature domain.
+  - Examples: `content/elevator/` (holds elevator blocks, items, entities, logic), `content/note/`, `content/role/`.
+- **`registry/`**: **Registries**. All central `DeferredRegister` classes (e.g., `ModBlocks`, `ModItems`). If you create a new item in `content/elevator/item/`, register it in `registry/ModItems.java`.
+- **`system/`**: **Core Logic & Mechanics**. Cross-cutting game systems that manage state or mechanics (e.g., `system/game/GameState.java`, task managers, capabilities/attachments).
+- **`client/`**: **Client-Side Only**. All rendering, models, GUI screens, and client event handlers. Mirrors the content structure (e.g., `client/renderer/elevator/`, `client/gui/`). This prevents dedicated server crashes.
+- **`network/`**: Network packets (`payload/`) and handlers (`handler/`).
+- **`command/`**: Server commands.
+- **`config/`**: Configuration files.
+
+For example:
+- If you're adding a **new elevator button block**, place the class in `content/elevator/block/` and register it in `registry/ModBlocks.java`.
+- If you're adding a **renderer** for that block, place it in `client/renderer/elevator/`.

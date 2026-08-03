@@ -1,14 +1,14 @@
 package com.scir4y.zeppelinmurdermod;
 
-import com.scir4y.zeppelinmurdermod.block.MODBLOCKS;
-import com.scir4y.zeppelinmurdermod.block.entity.MODBLOCKENTITIES;
-import com.scir4y.zeppelinmurdermod.common.task.MODTASKS;
-import com.scir4y.zeppelinmurdermod.data.ModAttachments;
-import com.scir4y.zeppelinmurdermod.entity.MODENTITIES;
-import com.scir4y.zeppelinmurdermod.component.MODDATACOMPONENTS;
-import com.scir4y.zeppelinmurdermod.item.MODITEMS;
-import com.scir4y.zeppelinmurdermod.item.ModCreativeTabs;
-import com.scir4y.zeppelinmurdermod.item.custom.SelectionRenderer;
+import com.scir4y.zeppelinmurdermod.registry.ModBlocks;
+import com.scir4y.zeppelinmurdermod.registry.ModBlockEntities;
+import com.scir4y.zeppelinmurdermod.registry.ModTasks;
+import com.scir4y.zeppelinmurdermod.system.ModAttachments;
+import com.scir4y.zeppelinmurdermod.registry.ModEntities;
+import com.scir4y.zeppelinmurdermod.registry.ModDataComponents;
+import com.scir4y.zeppelinmurdermod.registry.ModItems;
+import com.scir4y.zeppelinmurdermod.registry.ModCreativeTabs;
+import com.scir4y.zeppelinmurdermod.client.renderer.elevator.SelectionRenderer;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -38,6 +38,8 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import com.scir4y.zeppelinmurdermod.config.Config;
+import com.scir4y.zeppelinmurdermod.client.renderer.elevator.SelectionRenderer;
 
 
 @Mod(ZeppelinMurderMod.MODID)
@@ -55,14 +57,14 @@ public class ZeppelinMurderMod {
         ModCreativeTabs.register(modEventBus);
 
         //Registering mod data components (custom simplified alternative to WrittenBookContent, used by "Note")
-        MODDATACOMPONENTS.register(modEventBus);
+        ModDataComponents.register(modEventBus);
 
         //Registering mod items & mod blocks
-        MODITEMS.register(modEventBus);
-        MODBLOCKS.register(modEventBus);
-        MODTASKS.register();
-        MODBLOCKENTITIES.register(modEventBus);
-        MODENTITIES.register(modEventBus);
+        ModItems.register(modEventBus);
+        ModBlocks.register(modEventBus);
+        ModTasks.register();
+        ModBlockEntities.register(modEventBus);
+        ModEntities.register(modEventBus);
 
 
         NeoForge.EVENT_BUS.register(this);
