@@ -12,39 +12,31 @@ import static com.scir4y.zeppelinmurdermod.data.ModAttachments.PLAYER_ROUND_DATA
 
 public class MoodBar {
 
-    public static float progress = 0.0f;
-    private static final float FADE_SPEED_TICKS = 40.0f;
-
     private static final ResourceLocation EMPTY_MOOD_BAR_TEXTURE = ResourceLocation.fromNamespaceAndPath(ZeppelinMurderMod.MODID, "textures/gui/moodbar.png");
     private static final ResourceLocation FIELD_MOOD_BAR_TEXTURE = ResourceLocation.fromNamespaceAndPath(ZeppelinMurderMod.MODID, "textures/gui/moodbar2.png");
+
+    // Для плавной анимации изменения значения
+    private static float displayedMood = 0.0f;
 
     public static void render(GuiGraphics gfx, DeltaTracker delta) {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.player == null || minecraft.options.hideGui) {
-            progress = 0;
             return;
         }
 
-        float deltaTicks = delta.getRealtimeDeltaTicks();
-
-        if (progress < 1.0f) {
-            progress += deltaTicks / FADE_SPEED_TICKS;
-            progress = Mth.clamp(progress, 0.0f, 1.0f);
-        }
-
-        int screenWidth = gfx.guiWidth();
-        int screenHeight = gfx.guiHeight();
-
+        int barWidth = 64;
+        int barHeight = 16;
         int x = 10;
         int y = 10;
 
-        // Размеры текстуры шкалы
-        int barWidth = 64;
-        int barHeight = 16;
-
-        float currentVal = minecraft.player.getData(PLAYER_ROUND_DATA).currentMoodAmount;
+        float targetVal = minecraft.player.getData(PLAYER_ROUND_DATA).currentMoodAmount;
         float maxVal = Config.MAX_MOOD_AMOUNT.getAsInt();
-        int filledWidth = (int) (barWidth * (currentVal / maxVal));
+
+        float deltaTicks = delta.getRealtimeDeltaTicks();
+        float smoothing = 1.0f - (float) Math.pow(0.5, deltaTicks / 4.0f);
+        displayedMood = Mth.lerp(smoothing, displayedMood, targetVal);
+
+        int filledWidth = (int) (barWidth * (Mth.clamp(displayedMood, 0, maxVal) / maxVal));
 
         gfx.pose().pushPose();
         gfx.pose().scale(3, 3, 3);
