@@ -5,6 +5,7 @@ import com.scir4y.zeppelinmurdermod.block.entity.MODBLOCKENTITIES;
 import com.scir4y.zeppelinmurdermod.common.task.MODTASKS;
 import com.scir4y.zeppelinmurdermod.data.ModAttachments;
 import com.scir4y.zeppelinmurdermod.entity.MODENTITIES;
+import com.scir4y.zeppelinmurdermod.component.MODDATACOMPONENTS;
 import com.scir4y.zeppelinmurdermod.item.MODITEMS;
 import com.scir4y.zeppelinmurdermod.item.ModCreativeTabs;
 import com.scir4y.zeppelinmurdermod.item.custom.SelectionRenderer;
@@ -52,6 +53,9 @@ public class ZeppelinMurderMod {
 
         //Registering mod creative tabs
         ModCreativeTabs.register(modEventBus);
+
+        //Registering mod data components (custom simplified alternative to WrittenBookContent, used by "Note")
+        MODDATACOMPONENTS.register(modEventBus);
 
         //Registering mod items & mod blocks
         MODITEMS.register(modEventBus);

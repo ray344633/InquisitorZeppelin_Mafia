@@ -4,6 +4,9 @@
   "item.zeppelinmurder.elevator_floor_point": "Elevator Floor Point",
   "item.zeppelinmurder.elevator_call_linker": "Elevator Call Linker",
 
+  "item.zeppelinmurder.note": "Blank sheet",
+  "item.zeppelinmurder.written_note": "Written sheet",
+
   "block.zeppelinmurder.polished_brass_block": "Polished Brass Block",
   "block.zeppelinmurder.brass_chain": "Brass Chain",
   "block.zeppelinmurder.elevator_controller_block": "Elevator Controller",
