@@ -11,7 +11,9 @@ public class Config {
 
     public static final ModConfigSpec.IntValue MIN_PLAYERS =
             BUILDER.comment("Minimal amount of players for start")
-                    .defineInRange("minPlayers", 6, 3, 12);
+                    .defineInRange("minPlayers", 1, 1, 12);
+
+    // TODO 6 3 12
 
     public static final ModConfigSpec.IntValue MAX_PLAYERS =
             BUILDER.comment("Maximal amount of players for start")
@@ -24,6 +26,14 @@ public class Config {
     public static final ModConfigSpec.IntValue MOOD_DISCOUNT_SPEED =
             BUILDER.comment("Mood discount speed in seconds")
                     .defineInRange("moodDiscountSpeed", 1, 1, 1000);
+
+    public static final ModConfigSpec.IntValue TASK_INTERVAL_MIN =
+            BUILDER.comment("Minimum time in seconds before a player is given a new task")
+                    .defineInRange("taskIntervalMin", 30, 1, 3600);
+
+    public static final ModConfigSpec.IntValue TASK_INTERVAL_MAX =
+            BUILDER.comment("Maximum time in seconds before a player is given a new task")
+                    .defineInRange("taskIntervalMax", 90, 1, 3600);
 
     public static final ModConfigSpec SPEC = BUILDER.build();
 }
