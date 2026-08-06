@@ -33,7 +33,10 @@ sourceSets.main.resources {
 }
 
 repositories {
-    // Add here additional repositories if required by some of the dependencies below.
+    maven {
+        name = "Modrinth"
+        url = "https://api.modrinth.com/maven"
+    }
 }
 
 base {
@@ -97,7 +100,7 @@ neoForge {
             // "REGISTRIES": For firing of registry events.
             // "REGISTRYDUMP": For getting the contents of all registries.
             systemProperty 'forge.logging.markers', 'REGISTRIES'
-            
+
             // Disable early display to fix window handoff crashes on some systems (e.g., Linux/Wayland)
             systemProperty 'fml.earlydisplay', 'false'
 
@@ -127,6 +130,7 @@ configurations {
 }
 
 dependencies {
+    implementation "maven.modrinth:sound-physics-remastered:neoforge-1.21.1-1.5.1"
     // Example optional mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
     // compileOnly "mezz.jei:jei-${mc_version}-common-api:${jei_version}"
