@@ -1,5 +1,6 @@
 package com.scir4y.zeppelinmurdermod.content.elevator.entity;
 
+import com.scir4y.zeppelinmurdermod.content.note.entity.NoteEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
@@ -129,6 +130,9 @@ public class ElevatorCollisionHandler {
     }
 
     private static boolean canCollideWith(Entity entity) {
-        return !entity.isSpectator() && !entity.noPhysics && !entity.isPassenger() && entity.getPistonPushReaction() == PushReaction.NORMAL;
+        return !entity.isSpectator()
+                && (!entity.noPhysics || entity instanceof NoteEntity)
+                && !entity.isPassenger()
+                && entity.getPistonPushReaction() == PushReaction.NORMAL;
     }
 }
