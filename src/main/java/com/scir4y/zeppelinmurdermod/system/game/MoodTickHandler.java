@@ -23,27 +23,33 @@ public class MoodTickHandler {
 
     private static final int TICKS_PER_SECOND = 20;
 
+    // every server tick
     @SubscribeEvent
     public static void onServerTick(ServerTickEvent.Post event) {
+        // check game status
         if (!GameState.isGameStarted()) {
             return;
         }
 
+        // get discount value
         int discount = Config.MOOD_DISCOUNT_SPEED.getAsInt();
         if (discount <= 0) {
             return;
         }
 
+        // discount per tick value
         float discountPerTick = discount / (float) TICKS_PER_SECOND;
 
         // checks all players
         for (ServerPlayer player : event.getServer().getPlayerList().getPlayers()) {
+            // check player's role
             if (PlayerRoleManager.getRole(player) != Role.PLAYER) {
                 continue;
             }
-
+            // get player's Data
             var roundData = player.getData(PLAYER_ROUND_DATA);
 
+            // check MoodAmount
             if (roundData.currentMoodAmount <= 0) {
                 continue;
             }

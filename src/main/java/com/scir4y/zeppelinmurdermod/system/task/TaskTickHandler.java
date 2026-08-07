@@ -34,8 +34,10 @@ public class TaskTickHandler {
 
     private static final int TICKS_PER_SECOND = 20;
 
+    // every server tick
     @SubscribeEvent
     public static void onServerTick(ServerTickEvent.Post event) {
+        // check game status
         if (!GameState.isGameStarted()) {
             return;
         }
