@@ -17,6 +17,7 @@ import com.scir4y.zeppelinmurdermod.client.renderer.note.NoteEntityRenderer;
 @EventBusSubscriber(modid = ZeppelinMurderMod.MODID, value = Dist.CLIENT)
 public class ClientModEvents {
 
+    // rendering registration event on client
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(ModEntities.MOVING_ELEVATOR.get(), MovingElevatorRenderer::new);

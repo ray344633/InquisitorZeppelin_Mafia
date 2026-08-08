@@ -9,10 +9,12 @@ import com.scir4y.zeppelinmurdermod.network.payload.SyncMoodPayload;
 public class ClientPayloadHandler {
 
     public static void handleMoodSync(SyncMoodPayload payload, IPayloadContext context) {
+        // enqueue - to put in the queue
         context.enqueueWork(() -> {
             var player = Minecraft.getInstance().player;
             if (player != null) {
                 player.getData(PLAYER_ROUND_DATA).currentMoodAmount = payload.mood();
+                // payload.mood(); - get mood value from the received network packet
             }
         });
     }

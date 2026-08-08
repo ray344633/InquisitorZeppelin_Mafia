@@ -15,11 +15,13 @@ import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 @EventBusSubscriber(modid = ZeppelinMurderMod.MODID, value = Dist.CLIENT)
 public class MoodOverlay {
 
+    // Create a new GUI layer for the mood bar
     private static final ResourceLocation LAYER_ID =
             ResourceLocation.fromNamespaceAndPath(ZeppelinMurderMod.MODID, "mood_hud");
 
     private MoodOverlay() {}
 
+    // Register the GUI layer on the client
     @SubscribeEvent
     public static void onRegisterLayers(RegisterGuiLayersEvent event) {
         event.registerAboveAll(LAYER_ID, (gfx, delta) -> render(gfx, delta));

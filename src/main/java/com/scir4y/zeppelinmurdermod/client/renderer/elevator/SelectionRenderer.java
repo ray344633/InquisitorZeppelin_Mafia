@@ -31,7 +31,7 @@ import com.scir4y.zeppelinmurdermod.content.elevator.item.ElevatorGlueItem;
 @EventBusSubscriber(modid = "zeppelinmurdermod", value = Dist.CLIENT)
 public class SelectionRenderer {
 
-    // Свой RenderType: без culling (двусторонний рендер), с блендингом и без записи в depth-буфер,
+    // Свой RenderType: без culling (double-sided render), с blending и без записи в depth-buffer,
     // чтобы грани не пропадали/не мерцали в зависимости от порядка вершин и угла обзора.
     private static final RenderType FILLED_BOX_NO_CULL = RenderType.create(
             "zeppelinmurdermod:filled_box_no_cull",

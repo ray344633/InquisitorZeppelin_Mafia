@@ -27,6 +27,25 @@ import net.minecraft.resources.ResourceLocation;
  * The client handler is
  * {@link ClientPayloadHandler#handleMoodSync}.
  */
+
+// public record SyncMoodPayload(float mood) - automatically create public float mood()
+/* public record SyncMoodPayload(float mood) equivalents
+
+
+public class SyncMoodPayload {
+    private final float mood;
+
+    public SyncMoodPayload(float mood) {
+        this.mood = mood;
+    }
+
+    public float mood() {
+        return mood;
+    }
+}
+
+
+ */
 public record SyncMoodPayload(float mood) implements CustomPacketPayload {
     public static final CustomPacketPayload.Type<SyncMoodPayload> TYPE =
             new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(ZeppelinMurderMod.MODID, "sync_mood"));

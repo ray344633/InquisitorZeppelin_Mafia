@@ -12,12 +12,13 @@ import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 
 @EventBusSubscriber(modid = ZeppelinMurderMod.MODID, value = Dist.CLIENT)
 public class TaskOverlay {
-    // create new layer for hud
+    // Create a new GUI layer for the task hud
     private static final ResourceLocation LAYER_ID =
             ResourceLocation.fromNamespaceAndPath(ZeppelinMurderMod.MODID, "task_hud");
 
     private TaskOverlay() {}
 
+    // Register the GUI layer on the client
     @SubscribeEvent
     public static void onRegisterLayers(RegisterGuiLayersEvent event) {
         event.registerAboveAll(LAYER_ID, (gfx, delta) -> render(gfx, delta));

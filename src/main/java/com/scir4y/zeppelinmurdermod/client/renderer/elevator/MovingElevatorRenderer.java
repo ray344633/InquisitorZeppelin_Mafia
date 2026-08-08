@@ -33,7 +33,7 @@ public class MovingElevatorRenderer extends EntityRenderer<MovingElevatorEntity>
 
         BlockRenderDispatcher blockRenderer = Minecraft.getInstance().getBlockRenderer();
 
-        // Интерполяция координат сущности для плавного смещения света
+        // Interpolation entity's coordinates for smooth light displacement
         double lerpX = Mth.lerp(partialTick, entity.xo, entity.getX());
         double lerpY = Mth.lerp(partialTick, entity.yo, entity.getY());
         double lerpZ = Mth.lerp(partialTick, entity.zo, entity.getZ());
@@ -42,7 +42,7 @@ public class MovingElevatorRenderer extends EntityRenderer<MovingElevatorEntity>
             BlockPos relativeOffset = entry.getKey();
             BlockState state = entry.getValue();
 
-            // Динамический расчет света для каждого блока
+            // Calculation of dynamic lighting for each block
             BlockPos blockWorldPos = BlockPos.containing(
                     lerpX + relativeOffset.getX(),
                     lerpY + relativeOffset.getY(),
@@ -50,17 +50,17 @@ public class MovingElevatorRenderer extends EntityRenderer<MovingElevatorEntity>
             );
             int dynamicPackedLight = LevelRenderer.getLightColor(entity.level(), blockWorldPos);
 
-            // 1. Сохраняем текущее состояние матрицы
+            // 1. Save current state of matric
             poseStack.pushPose();
 
-            // 2. Смещаем блок относительно центра сущности
+            // 2. Offset of the block relative to the center of the entity
             poseStack.translate(
                     relativeOffset.getX() - 0.5,
                     relativeOffset.getY(),
                     relativeOffset.getZ() - 0.5
             );
 
-            // 3. Рендерим блок
+            // 3. Render block
             blockRenderer.renderSingleBlock(
                     state,
                     poseStack,
@@ -71,7 +71,7 @@ public class MovingElevatorRenderer extends EntityRenderer<MovingElevatorEntity>
                     null
             );
 
-            // 4. Обязательно восстанавливаем состояние матрицы ровно 1 раз за итерацию
+            // 4. Necessary restore matric's state
             poseStack.popPose();
         }
 
