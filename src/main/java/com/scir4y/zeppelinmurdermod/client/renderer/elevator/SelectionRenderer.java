@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.blaze3d.platform.NativeImage;
+import com.scir4y.zeppelinmurdermod.ZeppelinMurderMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -31,23 +32,22 @@ import com.scir4y.zeppelinmurdermod.content.elevator.item.ElevatorGlueItem;
 @EventBusSubscriber(modid = "zeppelinmurdermod", value = Dist.CLIENT)
 public class SelectionRenderer {
 
-    // Свой RenderType: без culling (double-sided render), с blending и без записи в depth-buffer,
-    // чтобы грани не пропадали/не мерцали в зависимости от порядка вершин и угла обзора.
+    // Custom RenderType: double-sided rendering, alpha blending, and depth-write disabled
     private static final RenderType FILLED_BOX_NO_CULL = RenderType.create(
-            "zeppelinmurdermod:filled_box_no_cull",
-            DefaultVertexFormat.POSITION_COLOR,
-            VertexFormat.Mode.QUADS,
-            256,
-            false,
-            true,
+            ZeppelinMurderMod.MODID + ":filled_box_no_cull", // Unique identifier
+            DefaultVertexFormat.POSITION_COLOR, // Vertex format with position and RGBA color attributes
+            VertexFormat.Mode.QUADS, // Draws geometry as quads (4 vertices per face)
+            256, // Initial buffer size in bytes
+            false, // affectsCrumbling: disables standard block breaking animation
+            true, // sortOnUpload: enables depth sorting for translucent quads to draw back-to-front
             RenderType.CompositeState.builder()
-                    .setShaderState(RenderStateShard.POSITION_COLOR_SHADER)
-                    .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
-                    .setCullState(RenderStateShard.NO_CULL)
-                    .setDepthTestState(RenderStateShard.LEQUAL_DEPTH_TEST)
-                    .setWriteMaskState(RenderStateShard.COLOR_WRITE)
-                    .setLayeringState(RenderStateShard.VIEW_OFFSET_Z_LAYERING)
-                    .createCompositeState(false)
+                    .setShaderState(RenderStateShard.POSITION_COLOR_SHADER) // Vanilla shader for solid color without textures
+                    .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY) // Enables standard alpha blending
+                    .setCullState(RenderStateShard.NO_CULL) // Disables face culling (renders inner and outer faces)
+                    .setDepthTestState(RenderStateShard.LEQUAL_DEPTH_TEST) // Passes depth test if pixel depth is <= existing depth
+                    .setWriteMaskState(RenderStateShard.COLOR_WRITE) // Writes color only; prevents writing to depth buffer
+                    .setLayeringState(RenderStateShard.VIEW_OFFSET_Z_LAYERING) // Applies a slight Z-offset to prevent z-fighting
+                    .createCompositeState(false) // Finalizes state without entity outline effect
     );
 
     @SubscribeEvent
@@ -117,13 +117,12 @@ public class SelectionRenderer {
     }
 
     // Manual method for creating cube faces.
-    // Порядок вершин приведён к единому CCW (против часовой стрелки), если смотреть на грань снаружи куба.
     private static void renderFilledBox(PoseStack poseStack, VertexConsumer builder, AABB box, float r, float g, float b, float a) {
         Matrix4f matrix = poseStack.last().pose();
         float minX = (float) box.minX; float minY = (float) box.minY; float minZ = (float) box.minZ;
         float maxX = (float) box.maxX; float maxY = (float) box.maxY; float maxZ = (float) box.maxZ;
 
-        // Bottom (Y = minY), смотрим снизу вверх (+Y — наружу нет, наружу тут -Y)
+        // Bottom (Y = minY)
         builder.addVertex(matrix, minX, minY, minZ).setColor(r, g, b, a);
         builder.addVertex(matrix, minX, minY, maxZ).setColor(r, g, b, a);
         builder.addVertex(matrix, maxX, minY, maxZ).setColor(r, g, b, a);

@@ -5,10 +5,11 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.item.component.WrittenBookContent;
 
 /**
  * Simplified data component for the "Note" item.
- * Unlike vanilla {@link net.minecraft.world.item.component.WrittenBookContent}
+ * Unlike vanilla {@link WrittenBookContent}
  * (title, author, generation, multiple pages, resolved flag) a note only ever needs
  * a single raw text string, so all the unused fields were dropped.
  */
