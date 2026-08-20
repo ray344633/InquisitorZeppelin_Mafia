@@ -31,17 +31,24 @@ public class ElevatorControllerBlock extends Block implements EntityBlock {
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        // if it is server side
         if (!level.isClientSide()) {
+            // get DataComponent or EMPTY
             CustomData customData = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
+            // get tags
             CompoundTag tag = customData.copyTag();
 
+            // if it is ELEVATOR_GLUE
             if (!stack.isEmpty() && stack.getItem() == ELEVATOR_GLUE.get()) {
+                // if GLUE has 2 position in tags
                 if (tag.contains("Pos1") && tag.contains("Pos2")) {
+                    // TODO this line
                     if (level.getBlockEntity(pos) instanceof ElevatorControllerBlockEntity controllerBE) {
+                        // convert tag position to BlockPos
                         BlockPos pos1 = BlockPos.of(tag.getLong("Pos1"));
                         BlockPos pos2 = BlockPos.of(tag.getLong("Pos2"));
 
-                        // Записываем данные в BlockEntity
+                        // write down the data in BlockEntity
                         controllerBE.setElevatorData(pos1, pos2);
 
                         player.displayClientMessage(Component.literal("Data was loaded, Point 1: " + pos1 + " Point 2: " + pos2), true);
@@ -62,22 +69,23 @@ public class ElevatorControllerBlock extends Block implements EntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        // if it is server side
         if (!level.isClientSide()) {
+            // TODO this line
             if (level.getBlockEntity(pos) instanceof ElevatorControllerBlockEntity controllerBE) {
-                // Проверяем, задана ли форма платформы (Elevator Glue)
+                // check, is the platform specify (Elevator Glue)
                 if (!controllerBE.hasValidData()) {
                     player.displayClientMessage(Component.literal("§cElevator data is missing! Use Elevator Glue first."), true);
                     return InteractionResult.FAIL;
                 }
 
-                // Нужно минимум 2 зарегистрированных этажа, иначе ехать некуда
+               // Need at least 2 registered floors, otherwise there is nowhere to go
                 if (controllerBE.getFloorCount() < 2) {
                     player.displayClientMessage(Component.literal("§cAdd at least 2 floor points using the Elevator Floor Point item!"), true);
                     return InteractionResult.FAIL;
                 }
 
-                // Ставим в очередь поездку на следующий этаж (диспетчер сам решит,
-                // ехать сразу или подождать 6 сек, если лифт только что приехал)
+                // Queue the move to the next floor
                 controllerBE.requestManualNext();
                 player.displayClientMessage(Component.literal("§aElevator called."), true);
             }

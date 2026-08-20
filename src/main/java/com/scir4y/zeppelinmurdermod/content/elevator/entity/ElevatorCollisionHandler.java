@@ -134,5 +134,5 @@ public class ElevatorCollisionHandler {
                 && (!entity.noPhysics || entity instanceof NoteEntity)
                 && !entity.isPassenger()
                 && entity.getPistonPushReaction() == PushReaction.NORMAL;
-    }
+        }
 }
