@@ -3,6 +3,7 @@ package com.scir4y.zeppelinmurdermod.registry;
 import com.scir4y.zeppelinmurdermod.ZeppelinMurderMod;
 import com.scir4y.zeppelinmurdermod.content.elevator.entity.MovingElevatorEntity;
 import com.scir4y.zeppelinmurdermod.content.note.entity.NoteEntity;
+import com.scir4y.zeppelinmurdermod.content.footstool.entity.FootstoolEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -23,6 +24,13 @@ public class ModEntities {
             ENTITY_TYPES.register("note", () -> EntityType.Builder.<NoteEntity>of(NoteEntity::new, MobCategory.MISC)
                     .sized(0.8f, 0.8f)
                     .build("note"));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<FootstoolEntity>> FOOTSTOOL_SEAT =
+            ENTITY_TYPES.register("footstool_seat", () -> FootstoolEntity.build(
+                    EntityType.Builder.<FootstoolEntity>of(FootstoolEntity::new, MobCategory.MISC)
+                            .noSummon()
+                            .noSave())
+                    .build("footstool_seat"));
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);

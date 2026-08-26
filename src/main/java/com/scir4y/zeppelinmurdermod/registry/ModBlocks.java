@@ -3,10 +3,12 @@ package com.scir4y.zeppelinmurdermod.registry;
 import com.scir4y.zeppelinmurdermod.ZeppelinMurderMod;
 import com.scir4y.zeppelinmurdermod.content.elevator.block.ElevatorCallerBlock;
 import com.scir4y.zeppelinmurdermod.content.elevator.block.ElevatorControllerBlock;
+import com.scir4y.zeppelinmurdermod.content.footstool.block.FootstoolBlock;
 import com.scir4y.zeppelinmurdermod.registry.ModItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ChainBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -48,6 +50,15 @@ public class ModBlocks {
                     .strength(2f)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.METAL)
+            ));
+
+        //  Footstool
+    public static final DeferredBlock<FootstoolBlock> FOOTSTOOL_BLOCK = registerBlock("footstool_block",
+            ()-> new FootstoolBlock(BlockBehaviour.Properties.of()
+                    .strength(2f)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.WOOL)
+                    .noOcclusion()
             ));
         // CraftBot                                         --- DELETE BEFORE PUBLISHING!!! ---
 
