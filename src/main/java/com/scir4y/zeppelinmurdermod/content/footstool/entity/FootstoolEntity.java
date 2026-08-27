@@ -6,6 +6,7 @@ import com.scir4y.zeppelinmurdermod.content.footstool.block.FootstoolBlock;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -14,6 +15,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -81,8 +83,35 @@ public class FootstoolEntity extends Entity implements IEntityWithComplexSpawn {
 
     @Override
     public Vec3 getDismountLocationForPassenger(LivingEntity livingEntity) {
-        Vec3 forward = Vec3.directionFromRotation(0, livingEntity.getYRot());
-        return new Vec3(this.getX() + forward.x * 0.75, this.getY(), this.getZ() + forward.z * 0.75);
+        Level level = this.level();
+        BlockPos center = this.blockPosition();
+        float yaw = livingEntity.getYRot();
+
+        int[] angleOffsets = {0, 45, -45, 90};
+
+        for (int offset : angleOffsets) {
+            Vec3 dir = Vec3.directionFromRotation(0, yaw + offset);
+            int dx = Math.round((float) dir.x);
+            int dz = Math.round((float) dir.z);
+
+            if (dx == 0 && dz == 0) {
+                continue;
+            }
+
+            BlockPos candidate = center.offset(dx, 0, dz);
+            if (hasAirSpace(level, candidate)) {
+                return new Vec3(candidate.getX() + 0.5, candidate.getY(), candidate.getZ() + 0.5);
+            }
+        }
+
+        return new Vec3(this.getX(), this.getY() + 0.7, this.getZ());
+    }
+
+    private boolean hasAirSpace(Level level, BlockPos pos) {
+        BlockState feet = level.getBlockState(pos);
+        BlockState head = level.getBlockState(pos.above());
+        return feet.getCollisionShape(level, pos).isEmpty()
+                && head.getCollisionShape(level, pos.above()).isEmpty();
     }
 
     @Override
