@@ -1,0 +1,17 @@
+{
+  "item.zeppelinmurder.knife": "Ніж",
+  "item.zeppelinmurder.elevator_glue": "Клей для ліфта",
+  "item.zeppelinmurder.elevator_floor_point": "Точка поверху ліфта",
+  "item.zeppelinmurder.elevator_call_linker": "Зв'язувач виклику ліфта",
+
+  "item.zeppelinmurder.note": "Чистий аркуш",
+  "item.zeppelinmurder.written_note": "Списаний аркуш",
+
+  "block.zeppelinmurder.polished_brass_block": "Полірований латунний блок",
+  "block.zeppelinmurder.brass_chain": "Латунний ланцюг",
+  "block.zeppelinmurder.elevator_controller_block": "Контролер ліфта",
+  "block.zeppelinmurder.elevator_caller_block": "Кнопка виклику ліфта",
+  "block.zeppelinmurder.white_footstool_block": "Біла табуретка",
+
+  "creativetab.zeppelinmurder.zeppelin_items": "I:UF Предмети"
+}

@@ -3,8 +3,8 @@
 	"credit": "Maded by Ray_Mods",
 	"ambientocclusion": false,
 	"textures": {
-		"missing": "zeppelinmurder:block/footstool_block",
-		"particle": "zeppelinmurder:block/footstool_block"
+		"missing": "zeppelinmurder:block/white_footstool_block",
+		"particle": "zeppelinmurder:block/white_footstool_block"
 	},
 	"display": {
 		"gui": {

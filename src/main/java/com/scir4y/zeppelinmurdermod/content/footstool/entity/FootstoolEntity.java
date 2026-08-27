@@ -22,8 +22,6 @@ import net.neoforged.neoforge.entity.IEntityWithComplexSpawn;
 
 public class FootstoolEntity extends Entity implements IEntityWithComplexSpawn {
 
-    private static final double SEAT_HEIGHT = 7.0 / 16.0;
-
     public FootstoolEntity(EntityType<?> entityType, Level level) {
         super(entityType, level);
         this.noPhysics = true;
@@ -34,14 +32,14 @@ public class FootstoolEntity extends Entity implements IEntityWithComplexSpawn {
     }
 
     public static EntityType.Builder<FootstoolEntity> build(EntityType.Builder<FootstoolEntity> builder) {
-        return builder.sized(0.25f, 0.25f);
+        return builder.sized(1f, 0.31f);
     }
 
     @Override
     public void setPos(double x, double y, double z) {
         super.setPos(x, y, z);
         AABB bb = getBoundingBox();
-        Vec3 diff = new Vec3(x, y, z).subtract(bb.getCenter());
+        Vec3 diff = new Vec3(x, y+0.28f, z).subtract(bb.getCenter());
         setBoundingBox(bb.move(diff));
     }
 
@@ -49,7 +47,7 @@ public class FootstoolEntity extends Entity implements IEntityWithComplexSpawn {
     protected void positionRider(Entity entity, MoveFunction callback) {
         if (!this.hasPassenger(entity))
             return;
-        double heightOffset = this.getPassengerRidingPosition(entity).y - entity.getVehicleAttachmentPoint(this).y;
+        double heightOffset = this.getPassengerRidingPosition(entity).y - entity.getVehicleAttachmentPoint(this).y + 0.2f;
         callback.accept(entity, this.getX(), heightOffset, this.getZ());
     }
 

@@ -6,6 +6,7 @@ import com.scir4y.zeppelinmurdermod.content.elevator.block.ElevatorControllerBlo
 import com.scir4y.zeppelinmurdermod.content.footstool.block.FootstoolBlock;
 import com.scir4y.zeppelinmurdermod.registry.ModItems;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -52,16 +53,15 @@ public class ModBlocks {
                     .sound(SoundType.METAL)
             ));
 
-        //  Footstool
-    public static final DeferredBlock<FootstoolBlock> FOOTSTOOL_BLOCK = registerBlock("footstool_block",
-            ()-> new FootstoolBlock(BlockBehaviour.Properties.of()
+        //  White footstool
+    public static final DeferredBlock<FootstoolBlock> WHITE_FOOTSTOOL_BLOCK = registerBlock("white_footstool_block",
+            () -> new FootstoolBlock(DyeColor.WHITE, BlockBehaviour.Properties.of()
                     .strength(2f)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.WOOL)
                     .noOcclusion()
             ));
         // CraftBot                                         --- DELETE BEFORE PUBLISHING!!! ---
-
 
     //Registering Blocks (helper method)
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {

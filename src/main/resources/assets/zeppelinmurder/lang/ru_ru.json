@@ -1,0 +1,17 @@
+{
+  "item.zeppelinmurder.knife": "Нож",
+  "item.zeppelinmurder.elevator_glue": "Клей для лифта",
+  "item.zeppelinmurder.elevator_floor_point": "Точка этажа лифта",
+  "item.zeppelinmurder.elevator_call_linker": "Связыватель вызова лифта",
+
+  "item.zeppelinmurder.note": "Чистый лист",
+  "item.zeppelinmurder.written_note": "Исписанный лист",
+
+  "block.zeppelinmurder.polished_brass_block": "Полированный латунный блок",
+  "block.zeppelinmurder.brass_chain": "Латунная цепь",
+  "block.zeppelinmurder.elevator_controller_block": "Контроллер лифта",
+  "block.zeppelinmurder.elevator_caller_block": "Кнопка вызова лифта",
+  "block.zeppelinmurder.white_footstool_block": "Белая табуретка",
+
+  "creativetab.zeppelinmurder.zeppelin_items": "I:UF Предметы"
+}
