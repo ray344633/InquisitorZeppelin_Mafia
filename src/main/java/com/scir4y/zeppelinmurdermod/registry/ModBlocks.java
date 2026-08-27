@@ -3,6 +3,7 @@ package com.scir4y.zeppelinmurdermod.registry;
 import com.scir4y.zeppelinmurdermod.ZeppelinMurderMod;
 import com.scir4y.zeppelinmurdermod.content.elevator.block.ElevatorCallerBlock;
 import com.scir4y.zeppelinmurdermod.content.elevator.block.ElevatorControllerBlock;
+import com.scir4y.zeppelinmurdermod.content.wastepaper.WastepaperBlock;
 import com.scir4y.zeppelinmurdermod.registry.ModItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -50,6 +51,15 @@ public class ModBlocks {
                     .sound(SoundType.METAL)
             ));
         // CraftBot                                         --- DELETE BEFORE PUBLISHING!!! ---
+
+    //  Wastepaper
+    public static final DeferredBlock<WastepaperBlock> WASTEPAPER_BLOCK = registerBlock("wastepaper_block",
+            () -> new WastepaperBlock(BlockBehaviour.Properties.of()
+                    .strength(2f)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.WOOL)
+                    .noOcclusion()
+            ));
 
 
     //Registering Blocks (helper method)
