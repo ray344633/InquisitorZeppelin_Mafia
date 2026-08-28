@@ -1,5 +1,19 @@
 {
   "variants": {
-    "": { "model": "zeppelinmurder:block/wastepaper_block" }
+    "facing=north": {
+      "model": "zeppelinmurder:block/wastepaper_block"
+    },
+    "facing=east": {
+      "model": "zeppelinmurder:block/wastepaper_block",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "zeppelinmurder:block/wastepaper_block",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "zeppelinmurder:block/wastepaper_block",
+      "y": 270
+    }
   }
 }
