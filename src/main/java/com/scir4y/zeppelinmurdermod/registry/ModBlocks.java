@@ -3,6 +3,7 @@ package com.scir4y.zeppelinmurdermod.registry;
 import com.scir4y.zeppelinmurdermod.ZeppelinMurderMod;
 import com.scir4y.zeppelinmurdermod.content.elevator.block.ElevatorCallerBlock;
 import com.scir4y.zeppelinmurdermod.content.elevator.block.ElevatorControllerBlock;
+import com.scir4y.zeppelinmurdermod.content.scone.SconeBlock;
 import com.scir4y.zeppelinmurdermod.registry.ModItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -48,6 +49,14 @@ public class ModBlocks {
                     .strength(2f)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.METAL)
+            ));
+        // Scone Block
+    public static final DeferredBlock<SconeBlock> SCONE_BLOCK = registerBlock("sconce_block",
+            ()-> new SconeBlock(BlockBehaviour.Properties.of()
+                    .strength(2f)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.METAL)
+                    .noOcclusion()
             ));
         // CraftBot                                         --- DELETE BEFORE PUBLISHING!!! ---
 

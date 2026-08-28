@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "zeppelinmurder:block/sconce_block",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "zeppelinmurder:block/sconce_block",
+      "y": 270
+    },
+    "facing=south": {
+      "model": "zeppelinmurder:block/sconce_block",
+      "y": 0
+    },
+    "facing=west": {
+      "model": "zeppelinmurder:block/sconce_block",
+      "y": 90
+    }
+  }
+}

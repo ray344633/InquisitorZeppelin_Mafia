@@ -32,6 +32,7 @@ public class ModCreativeTabs {
                         output.accept(ModBlocks.ELEVATOR_CONTROLLER_BLOCK);
                         output.accept(ModBlocks.ELEVATOR_CALLER_BLOCK);
                         output.accept(ModBlocks.BRASS_CHAIN);
+                        output.accept(ModBlocks.SCONE_BLOCK);
 
                     }).build());
 
