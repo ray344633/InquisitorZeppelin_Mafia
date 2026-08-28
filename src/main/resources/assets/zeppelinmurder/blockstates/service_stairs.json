@@ -1,0 +1,40 @@
+{
+  "variants": {
+    "facing=east,connected=false": {
+      "model": "zeppelinmurder:block/service_stairs",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=east,connected=true": {
+      "model": "zeppelinmurder:block/service_stairs_connected",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=north,connected=false": {
+      "model": "zeppelinmurder:block/service_stairs",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=north,connected=true": {
+      "model": "zeppelinmurder:block/service_stairs_connected",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,connected=false": {
+      "model": "zeppelinmurder:block/service_stairs"
+    },
+    "facing=south,connected=true": {
+      "model": "zeppelinmurder:block/service_stairs_connected"
+    },
+    "facing=west,connected=false": {
+      "model": "zeppelinmurder:block/service_stairs",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=west,connected=true": {
+      "model": "zeppelinmurder:block/service_stairs_connected",
+      "uvlock": true,
+      "y": 90
+    }
+  }
+}

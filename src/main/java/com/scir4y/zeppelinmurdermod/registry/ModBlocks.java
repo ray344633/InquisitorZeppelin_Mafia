@@ -3,6 +3,7 @@ package com.scir4y.zeppelinmurdermod.registry;
 import com.scir4y.zeppelinmurdermod.ZeppelinMurderMod;
 import com.scir4y.zeppelinmurdermod.content.elevator.block.ElevatorCallerBlock;
 import com.scir4y.zeppelinmurdermod.content.elevator.block.ElevatorControllerBlock;
+import com.scir4y.zeppelinmurdermod.content.servicestairs.ServiceStairs;
 import com.scir4y.zeppelinmurdermod.registry.ModItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -49,6 +50,16 @@ public class ModBlocks {
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.METAL)
             ));
+        // ServiceStairs
+    public static final DeferredBlock<ServiceStairs> SERVICE_STAIRS = registerBlock(
+            "service_stairs",
+            () -> new ServiceStairs(BlockBehaviour.Properties.of()
+                    .strength(2f)
+                    .requiresCorrectToolForDrops()
+                    .sound(SoundType.METAL)
+                    .noOcclusion()
+            )
+    );
         // CraftBot                                         --- DELETE BEFORE PUBLISHING!!! ---
 
 
